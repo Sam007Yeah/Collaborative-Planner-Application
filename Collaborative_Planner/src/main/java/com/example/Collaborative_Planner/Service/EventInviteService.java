@@ -1,5 +1,6 @@
 package com.example.Collaborative_Planner.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class EventInviteService {
         if (existingInvite.isPresent()) {
             EventInvite inviteToUpdate = existingInvite.get();
             inviteToUpdate.setStatus(eventInvite.getStatus());
-            inviteToUpdate.setRespondedAt(eventInvite.getRespondedAt());
+            inviteToUpdate.setRespondedAt(LocalDateTime.now());
             return eventInviteRepository.save(inviteToUpdate);
         }
         return null;

@@ -35,7 +35,7 @@ public class EventInviteController {
         return eventInviteService.createEventInvite(eventInvite);
     }
 
-    @PostMapping("/updateInvite/")
+    @PostMapping("/updateInvite")
     public EventInvite updateEventInvite(@RequestBody EventInvite eventInvite) {
         return eventInviteService.updateEventInvite(eventInvite);
     }
