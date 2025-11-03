@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Collaborative_Planner.Entities.EventEntity;
 import com.example.Collaborative_Planner.Service.EventsService;
+import com.example.Collaborative_Planner.Utils.EventEntityDTO;
 
 @RestController
 @RequestMapping("/api/v1/events")
@@ -33,7 +34,7 @@ public class EventsController {
     }
 
     @PostMapping("/create")
-    public EventEntity createEvent(@RequestBody EventEntity event) {
+    public EventEntity createEvent(@RequestBody EventEntityDTO event) {
         return eventsService.createEvent(event);
     }
 
