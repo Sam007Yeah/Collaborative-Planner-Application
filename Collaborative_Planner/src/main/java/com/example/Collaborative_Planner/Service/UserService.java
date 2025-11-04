@@ -3,10 +3,13 @@ package com.example.Collaborative_Planner.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.Collaborative_Planner.Entities.UserEntity;
 import com.example.Collaborative_Planner.Repository.UserRepository;
+import com.example.Collaborative_Planner.Utils.RegisterDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,6 +21,9 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
@@ -59,6 +65,28 @@ public class UserService {
 
     public void deleteUser(long id) {
         userRepository.deleteById(id);
+    }
+
+    public void registerUser(RegisterDTO dto) {
+        if (userRepository.existsByUsername(dto.getUsername()) || userRepository.existsByEmail(dto.getEmail())) {
+            throw new RuntimeException("Username already exists");
+        }
+        UserEntity user = new UserEntity();
+        user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        userRepository.save(user);
+    }
+
+    public UserEntity loadUserForLogin(String username, String password) {
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BadCredentialsException("Invalid password");
+        }
+        return user;
     }
 
 }

@@ -7,7 +7,11 @@ meta {
 post {
   url: http://localhost:8080/api/v1/events/create
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTYW0wMDdZZWFoIiwiaWF0IjoxNzYyMjc1MjMzLCJleHAiOjE3NjIzNjE2MzN9.eMDTA10u5hF9Y_2lzmwvK-Hm0F0pGWFOaQ2jZHvmb4fdQqqWY7OTSKXzey2NHAIUnLHy1nX0xAelSF5sZ36Gpw
 }
 
 body:json {
@@ -16,9 +20,8 @@ body:json {
     "description": "Feedback session.",
     "startTime": "2025-11-04T14:00:00",
     "endTime": "2025-11-04T15:30:00",
-    "ownerId": 2,
-    "visibility": "SHARED",
-    "inviteeIds": [1]
+    "ownerId": 1,
+    "visibility": "PERSONAL"
   }
 }
 
